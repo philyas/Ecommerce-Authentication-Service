@@ -7,6 +7,7 @@ import { User } from 'src/user/entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
 
+
 @Injectable()
 export class AuthService {
   constructor(
@@ -16,7 +17,9 @@ export class AuthService {
   ) {}
 
   
-  async login(username:string, password:string, email:string): Promise<{ accessToken: string }> {
+  async login(createUserDto:CreateUserDto): Promise<{ accessToken: string }> {
+    const {email, password, username } = createUserDto
+
     const user = await this.userRepository.findOne({ where: { email } });
     const JWT_SECRET = 'JWT_TEST'
 
